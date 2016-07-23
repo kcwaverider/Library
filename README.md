@@ -1,3 +1,3 @@
-Java
+Library
 ====
-This repository contains some of my Java programs
+This is a simple program for storing/retrieving book information to/from a mySQL database written in Java.
