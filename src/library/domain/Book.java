@@ -9,13 +9,6 @@ package library.domain;
 * 
  */
 /*
-Class - Book
-Chad Clayton
-cclayton@regis.edu
-
-This class defines and object, Book, to be used in the Library program. 
-each Book has and Isbn and list of authors.
-
 Netbeans 8.1
 Mac OSX 10.11.5
  */
