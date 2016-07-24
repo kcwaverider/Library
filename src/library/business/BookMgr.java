@@ -36,6 +36,9 @@ import library.domain.Book;
 
 
 public class BookMgr {
+    public BookMgr() {
+        
+    }
     
 
     

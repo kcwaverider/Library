@@ -30,10 +30,168 @@
  * THE SOFTWARE.
  */
 package library.presentation;
+import library.domain.Book;
+import library.business.BookMgr;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-
+import java.util.*;
 public class BookEntryUI extends JFrame{
-    stuff here
+    
+    private static String emptyAlert = "               ";
+    private JTextField isbnField;
+    private JTextField authorField;
+    private JLabel authorAlertLabel;
+    private JLabel isbnAlertLabel;
+    
+    private JButton addButton;
+    private JButton resetButton;
+    
+    private static int screenWidth = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().width;
+    private static int screenHeight = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height;
+    
+    
+    public BookEntryUI() {
+        super("Library Book Entry");
+        
+        int windowHeight = 150;
+        int windowWidth = 385; //screenWidth / 3;
+        int windowX = (screenWidth - windowWidth) / 2;
+        int windowY = (screenHeight - windowHeight) / 2;
+        setBounds(windowX, windowY, windowWidth, windowHeight);
+        
+        // JPanel to hold text fields and labels
+        JPanel panel = new JPanel();
+        
+        // ISBN
+        JLabel isbnLabel = new JLabel("ISBN   ", JLabel.RIGHT);
+        isbnAlertLabel = new JLabel(emptyAlert);
+        isbnField = new JTextField(20);
+        /*
+        panel.add(isbnLabel);
+        panel.add(isbnField);
+        panel.add(isbnAlertLabel);
+        */
+        
+        // Author(s)
+        JLabel authorLabel = new JLabel("   Author(s)   ", JLabel.RIGHT);
+        authorAlertLabel = new JLabel(emptyAlert);
+        authorField = new JTextField(20);
+        JLabel authorInstructions = new JLabel("  Separate multiple authors by commas");
+        authorInstructions.setFont(new Font("Courier", Font.ITALIC, 10));
+        authorInstructions.setAlignmentY(TOP_ALIGNMENT);
+       
+        
+        /*
+        panel.add(authorLabel);
+        panel.add(authorField);
+        panel.add(authorAlertLabel);
+        */
+    
+        add(panel, BorderLayout.CENTER);
+        
+        // buttons
+        addButton = new JButton("Add");
+        resetButton = new JButton("Reset");
+        
+        // Layout magic!
+        JPanel buttonPanel = new JPanel();
+        JPanel labelPanel = new JPanel();
+        JPanel fieldPanel = new JPanel();
+        JPanel alertPanel = new JPanel();
+        
+        GridLayout labelLayout = new GridLayout(3,1);
+        labelPanel.add(isbnLabel);
+        labelPanel.add(authorLabel);
+        labelPanel.setLayout(labelLayout);
+        add(labelPanel, BorderLayout.WEST);
+        
+        GridLayout fieldLayout = new GridLayout(3,1);
+        fieldPanel.add(isbnField);
+        fieldPanel.add(authorField);
+        fieldPanel.add(authorInstructions);
+        fieldPanel.setLayout(fieldLayout);
+        add(fieldPanel, BorderLayout.CENTER);
+        
+        
+        GridLayout alertLayout = new GridLayout(3,1);
+        alertPanel.add(isbnAlertLabel);
+        alertPanel.add(authorAlertLabel);
+        alertPanel.setLayout(alertLayout);
+        add(alertPanel, BorderLayout.EAST);
+        
+        buttonPanel.add(addButton);
+        buttonPanel.add(resetButton);
+        add(buttonPanel, BorderLayout.SOUTH);
+        
+        
+        
+        addButton.addActionListener(new ButtonListener());
+        resetButton.addActionListener(new ButtonListener());
+        
+        setResizable(false);
+        setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+    }
+    
+    private class ButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == addButton) {
+                String isbn = isbnField.getText();
+                String authors = authorField.getText();
+                
+                // Check for inptu errors before doing any actual work (bouncer technique)
+                boolean isbn10 = isbn.length() == 10;
+                boolean isbn13 = isbn.length() == 13;
+                boolean authorBlank = authorField.getText().equals(""); //this should be imporoved to require at least one non-whitespace character to be entered
+                boolean errorEncountered = false;
+                if ( !( isbn10 || isbn13 ) ){
+                    String isbnAlert = "ISBN must be 10 or 13 digits   ";
+                    isbnAlertLabel.setText(isbnAlert);
+                    errorEncountered = true;
+                }
+                if (authorBlank) {
+                    String authorAlert = "Need Author Name";
+                    authorAlertLabel.setText(authorAlert);
+                    errorEncountered = true;
+                }
+                //if we've encountered an error return w/o doing anything
+                if(errorEncountered) {
+                    System.out.println("Bad Input");
+                    return;
+                }
+                   
+                // If we've made it this far we know the input is good, time to process it
+                String[] authorsArray = authors.split(",");
+                for (String entry : authorsArray) {
+                    entry = entry.trim();
+                }
+                ArrayList<String> authorsList = new ArrayList<String>(Arrays.asList(authorsArray));
+                
+                Book book = new Book(authorsList, isbn);
+                BookMgr bookMgr = new BookMgr();
+                bookMgr.storeBook(book);
+                System.out.println("Add Button");
+                
+                //clean up UI from any error messages
+                isbnAlertLabel.setText(emptyAlert);
+                authorAlertLabel.setText(emptyAlert);
+                
+                
+                
+            } else if (e.getSource() == resetButton) {
+                
+                authorField.setText("");
+                isbnField.setText("");
+                isbnAlertLabel.setText(emptyAlert);
+                authorAlertLabel.setText(emptyAlert);
+                System.out.println("Reset Button");
+            }
+        }
+    }
+    
+    public static void main (String args[]) {
+        BookEntryUI window = new BookEntryUI();
+    }
 }
