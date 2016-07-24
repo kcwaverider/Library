@@ -170,8 +170,11 @@ public class BookEntryUI extends JFrame{
                 ArrayList<String> authorsList = new ArrayList<String>(Arrays.asList(authorsArray));
                 
                 Book book = new Book(authorsList, isbn);
-                BookMgr bookMgr = new BookMgr();
-                bookMgr.storeBook(book);
+                if (book.validate()){
+                    BookMgr bookMgr = new BookMgr();
+                    bookMgr.storeBook(book);
+                }
+                System.out.println(book.toString());
                 System.out.println("Add Button");
                 
                 //clean up UI from any error messages

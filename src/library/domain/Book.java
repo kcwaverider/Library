@@ -149,7 +149,10 @@ public class Book {
             return false;
         } 
     }
-    
+    /* Validates the book's ISBN, ensurring that it is 10 or 13
+        number only characters.
+    */
+   
     private boolean validateIsbn(String Isbn) {
         if (Isbn == null || Isbn.equals("")) return false;
         
@@ -169,13 +172,25 @@ public class Book {
         if(!validIsbn) return false;
         return true;
     }
-    
+    /*validates the Author array list, ensureing that there are not empty
+        strings and that at least 1 author is in the list
+    */
     private boolean validateAuthorList(ArrayList<String> authors) {
         // Check to see if authors contains illegal values
         if (authors.contains(null) || authors.contains("")) return false;
         // Check to see if authors has at least one value
         if (authors.size() < 1) return false;
         return true;
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+    @Override
+    public String toString(){
+        return "ISBN: " + this.Isbn.toString() +  " - " + "Authors :" + this.authors.toString();
+        
     }
     
 }
