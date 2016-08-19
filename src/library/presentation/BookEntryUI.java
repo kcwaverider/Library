@@ -38,7 +38,7 @@ import java.awt.event.*;
 import java.util.*;
 public class BookEntryUI extends JFrame{
     
-    private static String emptyAlert = "               ";
+    private String emptyAlert = "               ";
     private JTextField isbnField;
     private JTextField authorField;
     private JLabel authorAlertLabel;
@@ -144,23 +144,9 @@ public class BookEntryUI extends JFrame{
                 // Check for inptu errors before doing any actual work (bouncer technique)
                 boolean isbn10 = isbn.length() == 10;
                 boolean isbn13 = isbn.length() == 13;
-                boolean authorBlank = authorField.getText().equals(""); //this should be imporoved to require at least one non-whitespace character to be entered
+                boolean authorBlank = authors == ""; //this should be imporoved to require at least one non-whitespace character to be entered
                 boolean errorEncountered = false;
-                if ( !( isbn10 || isbn13 ) ){
-                    String isbnAlert = "ISBN must be 10 or 13 digits   ";
-                    isbnAlertLabel.setText(isbnAlert);
-                    errorEncountered = true;
-                }
-                if (authorBlank) {
-                    String authorAlert = "Need Author Name";
-                    authorAlertLabel.setText(authorAlert);
-                    errorEncountered = true;
-                }
-                //if we've encountered an error return w/o doing anything
-                if(errorEncountered) {
-                    System.out.println("Bad Input");
-                    return;
-                }
+                
                    
                 // If we've made it this far we know the input is good, time to process it
                 String[] authorsArray = authors.split(",");
@@ -168,14 +154,44 @@ public class BookEntryUI extends JFrame{
                     entry = entry.trim();
                 }
                 ArrayList<String> authorsList = new ArrayList<String>(Arrays.asList(authorsArray));
-                
+                System.out.println(authorsList);
                 Book book = new Book(authorsList, isbn);
+                if ( !book.validateIsbn(book.getIsbn()) ){
+                    String isbnAlert = "ISBN must be 10 or 13 digits   ";
+                    isbnAlertLabel.setText(isbnAlert);
+                    System.out.println("isbn error");
+                    errorEncountered = true;
+                }
+                if (authorBlank) {
+                    String authorAlert = "Need Author Name";
+                    authorAlertLabel.setText(authorAlert);
+                    
+                    errorEncountered = true;
+                }
+                //if we've encountered an error return w/o doing anything
+                if(errorEncountered) {
+                    
+                    return;
+                }
+                
                 if (book.validate()){
                     BookMgr bookMgr = new BookMgr();
-                    bookMgr.storeBook(book);
+                    
+                    try{
+                        System.out.println("Adding Book");
+                        bookMgr.storeBook(book);
+                        System.out.println(book.toString());
+                        System.out.println("Add Button");
+                    } catch(Exception ex) {
+                        String exceptionAlert = "Unable to Store that book, sorry.";
+                        System.out.println(exceptionAlert);
+                        System.out.println(ex);
+                        isbnAlertLabel.setText(exceptionAlert);
+                        authorAlertLabel.setText(exceptionAlert);
+                    }
+                    
                 }
-                System.out.println(book.toString());
-                System.out.println("Add Button");
+                
                 
                 //clean up UI from any error messages
                 isbnAlertLabel.setText(emptyAlert);

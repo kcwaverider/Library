@@ -1,11 +1,3 @@
-/**
-* Author: Chad Clayton
-* email:  cclayton@regis.edu
-* Date:   2016.07.12
-* Description: BookMgr class handles the storage and retrieval of Books from the Library
- * system
- */
-
 /*
  * The MIT License
  *
@@ -29,26 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+package library.domain;
 
-package library.business;
-import java.util.*;
-import library.domain.*;
-import library.services.*;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
+/**
+ *
+ * @author kcwaverider
+ */
+@RunWith(Suite.class)
+@Suite.SuiteClasses({library.domain.BookTest.class})
+public class DomainSuite {
 
-public class BookMgr {
-    
-    
-    public BookMgr() {
-        
+    @BeforeClass
+    public static void setUpClass() throws Exception {
     }
-    
-    public Book storeBook(Book book) throws Exception{
-        
-        Factory factory = new Factory();
-        IBookSvc bookSvc = (IBookSvc) factory.getBookSvc("IBookSvc");
-        return bookSvc.add(book);
-        
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
     }
     
 }

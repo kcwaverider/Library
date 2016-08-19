@@ -1,11 +1,3 @@
-/**
-* Author: Chad Clayton
-* email:  cclayton@regis.edu
-* Date:   2016.07.12
-* Description: BookMgr class handles the storage and retrieval of Books from the Library
- * system
- */
-
 /*
  * The MIT License
  *
@@ -29,26 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
-package library.business;
-import java.util.*;
-import library.domain.*;
-import library.services.*;
+package library.domain;
+import java.io.Serializable;
 
 
-public class BookMgr {
+/**
+ *
+ * @author kcwaverider
+ */
+public class Login implements Serializable {
+    private String userName;
+    private String password;
     
+    public Login(){}
     
-    public BookMgr() {
-        
+    public Login(String userName, String password) {
+        this();
+        this.userName = userName;
+        this.password = password;
     }
     
-    public Book storeBook(Book book) throws Exception{
-        
-        Factory factory = new Factory();
-        IBookSvc bookSvc = (IBookSvc) factory.getBookSvc("IBookSvc");
-        return bookSvc.add(book);
-        
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+    
+    public String getPassword(){
+        return this.password;
+    }
+    
+    public String getUserName(){
+        return this.userName;
     }
     
 }

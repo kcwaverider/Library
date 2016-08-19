@@ -1,11 +1,3 @@
-/**
-* Author: Chad Clayton
-* email:  cclayton@regis.edu
-* Date:   2016.07.12
-* Description: BookMgr class handles the storage and retrieval of Books from the Library
- * system
- */
-
 /*
  * The MIT License
  *
@@ -29,26 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+package library.presentation;
 
-package library.business;
-import java.util.*;
-import library.domain.*;
-import library.services.*;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
-
-public class BookMgr {
+/**
+ *
+ * @author kcwaverider
+ */
+public class BookEntryUITest {
     
-    
-    public BookMgr() {
-        
+    public BookEntryUITest() {
     }
     
-    public Book storeBook(Book book) throws Exception{
-        
-        Factory factory = new Factory();
-        IBookSvc bookSvc = (IBookSvc) factory.getBookSvc("IBookSvc");
-        return bookSvc.add(book);
-        
+    @BeforeClass
+    public static void setUpClass() {
+    }
+    
+    @AfterClass
+    public static void tearDownClass() {
+    }
+
+    /**
+     * Test of main method, of class BookEntryUI.
+     */
+    @Test
+    public void testMain() {
+        System.out.println("main");
+        String[] args = null;
+        BookEntryUI.main(args);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
     
 }

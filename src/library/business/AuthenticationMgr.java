@@ -1,11 +1,3 @@
-/**
-* Author: Chad Clayton
-* email:  cclayton@regis.edu
-* Date:   2016.07.12
-* Description: BookMgr class handles the storage and retrieval of Books from the Library
- * system
- */
-
 /*
  * The MIT License
  *
@@ -29,26 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package library.business;
-import java.util.*;
 import library.domain.*;
 import library.services.*;
 
-
-public class BookMgr {
+/**
+ *
+ * @author kcwaverider
+ */
+public class AuthenticationMgr {
     
-    
-    public BookMgr() {
+    public AuthenticationMgr(){
         
     }
     
-    public Book storeBook(Book book) throws Exception{
+    public boolean authenticate(Login login) throws Exception{
+        //good
         
         Factory factory = new Factory();
-        IBookSvc bookSvc = (IBookSvc) factory.getBookSvc("IBookSvc");
-        return bookSvc.add(book);
+        IAuthenticationSvc  authSvc = (IAuthenticationSvc) factory.getAuthenticationSvc("IAuthenticationSvc");
+        return authSvc.authenticate(login);
         
+       
+        
+        /*
+        AuthenticationSvcSocketImpl authSocket = new AuthenticationSvcSocketImpl();
+        return authSocket.authenticate(login);
+        */
     }
     
 }

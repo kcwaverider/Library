@@ -2,8 +2,8 @@
 * Author: Chad Clayton
 * email:  cclayton@regis.edu
 * Date:   2016.07.12
-* Description: BookMgr class handles the storage and retrieval of Books from the Library
- * system
+* Description: BookEntryUI builds and displays a graphical user interface(GUI)
+* which enables the user to add a Book (object) to the library system.
  */
 
 /*
@@ -29,26 +29,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+package library.services;
 
-package library.business;
-import java.util.*;
-import library.domain.*;
-import library.services.*;
+import java.io.FileInputStream;
+import java.util.Properties;
 
 
-public class BookMgr {
+public class Factory {
     
-    
-    public BookMgr() {
+    /**getBookSvc()
+     * returns a book service, storage service
+     * @return Book
+     */
+    public IService getBookSvc(String serviceName) throws Exception {
+        // Changed -- return new BookSvcSerializedIOImpl();
         
+        Class c = Class.forName(getImplName(serviceName));
+        return (IService) c.newInstance();
     }
     
-    public Book storeBook(Book book) throws Exception{
-        
-        Factory factory = new Factory();
-        IBookSvc bookSvc = (IBookSvc) factory.getBookSvc("IBookSvc");
-        return bookSvc.add(book);
-        
+    public IService getAuthenticationSvc(String serviceName) throws Exception{
+        Class c = Class.forName(getImplName(serviceName));
+        return (IService) c.newInstance();
     }
     
+    private String getImplName(String serviceName) throws Exception {
+        FileInputStream fis = new FileInputStream("config/properties.txt");
+        Properties props = new Properties();
+        props.load(fis);
+        fis.close();
+        return props.getProperty(serviceName);
+    }
 }

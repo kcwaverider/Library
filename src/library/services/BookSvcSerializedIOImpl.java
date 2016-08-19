@@ -2,8 +2,8 @@
 * Author: Chad Clayton
 * email:  cclayton@regis.edu
 * Date:   2016.07.12
-* Description: BookMgr class handles the storage and retrieval of Books from the Library
- * system
+* Description: BookEntryUI builds and displays a graphical user interface(GUI)
+* which enables the user to add a Book (object) to the library system.
  */
 
 /*
@@ -30,25 +30,30 @@
  * THE SOFTWARE.
  */
 
-package library.business;
-import java.util.*;
+package library.services;
+import java.io.*;
 import library.domain.*;
-import library.services.*;
 
 
-public class BookMgr {
-    
-    
-    public BookMgr() {
-        
-    }
-    
-    public Book storeBook(Book book) throws Exception{
-        
-        Factory factory = new Factory();
-        IBookSvc bookSvc = (IBookSvc) factory.getBookSvc("IBookSvc");
-        return bookSvc.add(book);
-        
-    }
+
+
+
+public class BookSvcSerializedIOImpl implements Serializable, IBookSvc {
+   
+    /**
+     * add() adds & stores a book in the output file
+     * @param book
+     * @return book - the Book that is passed in
+     * @throws Exception 
+     */
+   @Override
+   public Book add(Book book) throws Exception {
+       FileOutputStream fileOut = new FileOutputStream("storage");
+       ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+       objectOut.writeObject(book);
+       objectOut.flush();
+       objectOut.close();
+       return book;
+   }
     
 }

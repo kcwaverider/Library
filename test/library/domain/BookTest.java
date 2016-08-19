@@ -169,4 +169,116 @@ public class BookTest {
         boolean result = instance.addAuthor("");
         assertEquals(expResult, result);
     }
+
+    /**
+     * Test of addAuthor method, of class Book.
+     */
+    @Test
+    public void testAddAuthor() {
+        System.out.println("addAuthor");
+        String author = "";
+        Book instance = new Book();
+        boolean expResult = false;
+        boolean result = instance.addAuthor(author);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setAuthors method, of class Book.
+     */
+    @Test
+    public void testSetAuthors() {
+        System.out.println("setAuthors");
+        ArrayList<String> authorList = null;
+        Book instance = new Book();
+        instance.setAuthors(authorList);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getAuthors method, of class Book.
+     */
+    @Test
+    public void testGetAuthors() {
+        System.out.println("getAuthors");
+        Book instance = new Book();
+        ArrayList<String> expResult = null;
+        ArrayList<String> result = instance.getAuthors();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setIsbn method, of class Book.
+     */
+    @Test
+    public void testSetIsbn() {
+        System.out.println("setIsbn");
+        String Isbn = "";
+        Book instance = new Book();
+        instance.setIsbn(Isbn);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getIsbn method, of class Book.
+     */
+    @Test
+    public void testGetIsbn() {
+        System.out.println("getIsbn");
+        Book instance = new Book();
+        String expResult = "";
+        String result = instance.getIsbn();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of equals method, of class Book.
+     */
+    @Test
+    public void testEquals() {
+        System.out.println("equals");
+        Object obj = null;
+        Book instance = new Book();
+        boolean expResult = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of validate method, of class Book.
+     */
+    @Test
+    public void testValidate() {
+        System.out.println("validate");
+        Book instance = new Book();
+        boolean expResult = false;
+        boolean result = instance.validate();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of toString method, of class Book.
+     */
+    @Test
+    public void testToString() {
+        System.out.println("toString");
+        Book instance = new Book();
+        String expResult = "";
+        String result = instance.toString();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

@@ -1,5 +1,3 @@
-package library.domain;
-
 /**
 * Author: Chad Clayton
 * email:  cclayton@regis.edu
@@ -9,12 +7,32 @@ package library.domain;
 * 
  */
 /*
-Netbeans 8.1
-Mac OSX 10.11.5
+ * The MIT License
+ *
+ * Copyright 2016 kcwaverider.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
 
 
-
+package library.domain;
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -22,7 +40,7 @@ import java.util.*;
  * each Book has and Isbn and list of authors.
  * @author Chad clayton
  */
-public class Book {
+public class Book implements Serializable{
     
     // The Isbn number of the book
     private String Isbn;
@@ -144,8 +162,10 @@ public class Book {
      */
     public boolean validate() {
         if (validateIsbn(this.Isbn) && validateAuthorList(this.authors)) {
+            System.out.println("Book Validated");
             return true;
         } else {
+            System.out.println("Book NOT Validated");
             return false;
         } 
     }
@@ -153,29 +173,43 @@ public class Book {
         number only characters.
     */
    
-    private boolean validateIsbn(String Isbn) {
-        if (Isbn == null || Isbn.equals("")) return false;
+    public boolean validateIsbn(String Isbn) {
+        if (Isbn == null || Isbn.equals("")){
+            System.out.println("176");
+            return false;
+        }
         
         // Check the structure of the Isbn (length and all #'s)
         boolean validIsbn = false;
         //Check the length
         for (int n = 0; n < ISBN_LENGTHS.length; n++) {
             
-            if (Isbn.length() == ISBN_LENGTHS[n]) validIsbn = true;
+            if (Isbn.length() == ISBN_LENGTHS[n]) {
+                validIsbn = true;
+            } else {
+                System.out.println("188");
+                System.out.println("ISBN Length = " + Isbn.length());
+                System.out.println("ISBN: " + Isbn);
+                System.out.println("Check against: " + ISBN_LENGTHS[n]);
+            }
         }
         //Check to see that each character is a number
         for (int n = 0; n < Isbn.length(); n++) {
             if (Isbn.charAt(n) < '0' || Isbn.charAt(n) > '9') {
+                System.out.println("194");
                 validIsbn = false;
             }
         }
-        if(!validIsbn) return false;
+        if(!validIsbn) {
+            System.out.println("199");
+            return false;
+        }
         return true;
     }
     /*validates the Author array list, ensureing that there are not empty
         strings and that at least 1 author is in the list
     */
-    private boolean validateAuthorList(ArrayList<String> authors) {
+    public boolean validateAuthorList(ArrayList<String> authors) {
         // Check to see if authors contains illegal values
         if (authors.contains(null) || authors.contains("")) return false;
         // Check to see if authors has at least one value

@@ -1,11 +1,3 @@
-/**
-* Author: Chad Clayton
-* email:  cclayton@regis.edu
-* Date:   2016.07.12
-* Description: BookMgr class handles the storage and retrieval of Books from the Library
- * system
- */
-
 /*
  * The MIT License
  *
@@ -29,26 +21,57 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package library.business;
-import java.util.*;
-import library.domain.*;
-import library.services.*;
 
+import library.domain.Book;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
-public class BookMgr {
+/**
+ *
+ * @author kcwaverider
+ */
+public class BookMgrTest {
     
-    
-    public BookMgr() {
-        
+    public BookMgrTest() {
     }
     
-    public Book storeBook(Book book) throws Exception{
-        
-        Factory factory = new Factory();
-        IBookSvc bookSvc = (IBookSvc) factory.getBookSvc("IBookSvc");
-        return bookSvc.add(book);
-        
+    @BeforeClass
+    public static void setUpClass() {
+    }
+    
+    @AfterClass
+    public static void tearDownClass() {
+    }
+
+    /**
+     * Test of storeBook method, of class BookMgr.
+     */
+    @Test
+    public void testStoreBook() throws Exception {
+        System.out.println("storeBook");
+        Book book = new Book("Name", "1234567890");
+        BookMgr instance = new BookMgr();
+        Book expResult = book;
+        Book result = instance.storeBook(book);
+        assertEquals(expResult, result);
+
+    }
+    
+    /**
+     * Test of storeBook method FAILURE, of class BookMgr.
+     */
+    @Test
+    public void testStoreBookFAIL() throws Exception {
+        System.out.println("storeBookFAIL");
+        Book book = new Book("Name", "1234567890");
+        BookMgr instance = new BookMgr();
+        Book expResult = new Book("Name1", "1234567899");;
+        Book result = instance.storeBook(book);
+        assertFalse(expResult == result);
+
     }
     
 }
